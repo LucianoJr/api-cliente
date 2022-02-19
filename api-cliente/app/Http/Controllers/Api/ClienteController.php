@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Cliente;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 
 class ClienteController extends Controller
 {
@@ -87,7 +89,8 @@ class ClienteController extends Controller
 
     public function showbyPlaca($numero)
     {
-        $cliente = $this->cliente->find($numero);
+        $final = Str::substr();
+        $cliente = $this->cliente->find($final);
 
         if (! $cliente) return response()->json(['mensagem' => ['Cliente não encontrado!']], 404);
       	$data = ['data' => $cliente];
