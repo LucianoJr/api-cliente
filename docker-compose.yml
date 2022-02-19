@@ -1,0 +1,34 @@
+version: '3'
+services:
+    nginx:
+        container_name: nginx-api
+        restart: always
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        volumes:
+            - ./api-cliente:/var/www/api-cliente
+            - ./nginx/logs/:/var/log/nginx
+            - ./nginx/sites/:/etc/nginx/conf.d
+            - ./nginx/data/ssl:/etc/nginx/ssl
+        ports:
+            - "8060:80"
+        networks:
+            - api
+
+    php-fpm:
+        container_name: php-fpm-api
+        restart: always
+        build:
+            context: ./php-fpm
+            dockerfile: Dockerfile
+        expose:
+            - "9000"
+        volumes:
+            - ./api-cliente:/var/www/api-cliente
+        networks:
+            - api
+
+networks:
+    api:
+        driver: bridge
